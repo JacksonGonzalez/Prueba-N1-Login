@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <Strong>Usuarios</Strong> 
                         <!-- <button class="float-right btn btn-primary btn-sm">Crear Usuario</button> -->
-                        <b-button v-b-modal.AddUser class="float-right btn btn-primary btn-sm">Crear Usuario</b-button>
+                        <b-button v-b-modal.AddModal class="float-right btn btn-primary btn-sm">Crear Usuario</b-button>
                     </div>
 
                     <div class="card-body">
@@ -37,8 +37,49 @@
         </div>
 
         <!-- ADD USERS -->
-        <b-modal id="AddUser" title="BootstrapVue">
-            <p class="my-4">Hello from modal!</p>
+        <b-modal id="AddModal" title="Agregar Usuario" hide-footer>
+            <form @submit.prevent="AgregarUser">
+                <div class="form-group">
+                    <label for="name">Nombre Completo</label>
+                    <input type="name" v-model="addUser.name" class="form-control" id="name" required>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo</label>
+                    <input type="email" v-model="addUser.email" class="form-control" id="email" required>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" v-model="addUser.password" class="form-control" id="exampleInputPassword1" required minlength='8'>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Fecha de Nacimiento</label>
+                    <input type="date" v-model="addUser.birthdate" class="form-control" id="date" required>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Numero de Celular</label>
+                    <input type="number" v-model="addUser.phone" class="form-control" id="phone" required maxlength="10">
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Sexo</label>
+                    <select v-model="addUser.gender" class="form-control" id="gender" required>
+                        <option value="M" selected>Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" v-on:click="hideCategoryModal('AddModal')" class="btn btn-default">Cancelar</button>
+            </form>
         </b-modal>
 
     </div>
@@ -49,6 +90,15 @@
         data() {
             return {
                 users : [],
+                addUser: {
+                    name : '',
+                    email : '',
+                    password : '',
+                    birthdate : '',
+                    phone : '',
+                    gender : '',
+                },
+                errors : [],
             }
         },
         mounted() {
@@ -67,7 +117,39 @@
                 .catch((error) => {
                     console.log(error);
                 });
-            }
+            },
+            hideModal(idModal){
+                this.$bvModal.hide(idModal);
+            },
+            AgregarUser(){
+
+                // console.log(this.addUser);
+                
+                axios.post('/users', {
+                    name: this.addUser.name,
+                    email: this.addUser.email,
+                    password: this.addUser.password,
+                    birthdate: this.addUser.birthdate,
+                    phone: this.addUser.phone,
+                    gender: this.addUser.gender,
+                })
+                .then(function (response) {
+                    // console.log(response);
+                    alert('Usuario Creado');
+                    this.readUser();
+                    this.hideModal('AddModal');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+                // this.hideModal('AddModal');
+                // this.readUser();
+                
+            },
+            hideModal(idModal){
+                this.$bvModal.hide(idModal);
+            },
         }
     }
 </script>

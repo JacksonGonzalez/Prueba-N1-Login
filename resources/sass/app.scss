@@ -6,3 +6,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.modal-backdrop{
+   background-color: rgba(0, 0, 0, 0.3) !important;
+}

@@ -1941,6 +1941,49 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1990,14 +2033,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      users: []
+      users: [],
+      addUser: {
+        name: '',
+        email: '',
+        password: '',
+        birthdate: '',
+        phone: '',
+        gender: ''
+      },
+      errors: []
     };
   },
   mounted: function mounted() {
     // console.log('Component mounted.')
     this.readUser();
   },
-  methods: {
+  methods: _defineProperty({
     readUser: function readUser() {
       var _this = this;
 
@@ -2007,8 +2059,32 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    hideModal: function hideModal(idModal) {
+      this.$bvModal.hide(idModal);
+    },
+    AgregarUser: function AgregarUser() {
+      // console.log(this.addUser);
+      axios.post('/users', {
+        name: this.addUser.name,
+        email: this.addUser.email,
+        password: this.addUser.password,
+        birthdate: this.addUser.birthdate,
+        phone: this.addUser.phone,
+        gender: this.addUser.gender
+      }).then(function (response) {
+        // console.log(response);
+        alert('Usuario Creado');
+        this.readUser();
+        this.hideModal('AddModal');
+      })["catch"](function (error) {
+        console.log(error);
+      }); // this.hideModal('AddModal');
+      // this.readUser();
     }
-  }
+  }, "hideModal", function hideModal(idModal) {
+    this.$bvModal.hide(idModal);
+  })
 });
 
 /***/ }),
@@ -80343,8 +80419,8 @@ var render = function() {
                     directives: [
                       {
                         name: "b-modal",
-                        rawName: "v-b-modal.AddUser",
-                        modifiers: { AddUser: true }
+                        rawName: "v-b-modal.AddModal",
+                        modifiers: { AddModal: true }
                       }
                     ],
                     staticClass: "float-right btn btn-primary btn-sm"
@@ -80390,9 +80466,242 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("b-modal", { attrs: { id: "AddUser", title: "BootstrapVue" } }, [
-        _c("p", { staticClass: "my-4" }, [_vm._v("Hello from modal!")])
-      ])
+      _c(
+        "b-modal",
+        {
+          attrs: { id: "AddModal", title: "Agregar Usuario", "hide-footer": "" }
+        },
+        [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.AgregarUser($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "name" } }, [
+                  _vm._v("Nombre Completo")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addUser.name,
+                      expression: "addUser.name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "name", id: "name", required: "" },
+                  domProps: { value: _vm.addUser.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.addUser, "name", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "email" } }, [_vm._v("Correo")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addUser.email,
+                      expression: "addUser.email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "email", id: "email", required: "" },
+                  domProps: { value: _vm.addUser.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.addUser, "email", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "exampleInputPassword1" } }, [
+                  _vm._v("Password")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addUser.password,
+                      expression: "addUser.password"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "password",
+                    id: "exampleInputPassword1",
+                    required: "",
+                    minlength: "8"
+                  },
+                  domProps: { value: _vm.addUser.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.addUser, "password", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "date" } }, [
+                  _vm._v("Fecha de Nacimiento")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addUser.birthdate,
+                      expression: "addUser.birthdate"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "date", required: "" },
+                  domProps: { value: _vm.addUser.birthdate },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.addUser, "birthdate", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "phone" } }, [
+                  _vm._v("Numero de Celular")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addUser.phone,
+                      expression: "addUser.phone"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    id: "phone",
+                    required: "",
+                    maxlength: "10"
+                  },
+                  domProps: { value: _vm.addUser.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.addUser, "phone", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "gender" } }, [_vm._v("Sexo")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addUser.gender,
+                        expression: "addUser.gender"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "gender", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.addUser,
+                          "gender",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "M", selected: "" } }, [
+                      _vm._v("Masculino")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "F" } }, [
+                      _vm._v("Femenino")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                [_vm._v("Submit")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.hideCategoryModal("AddModal")
+                    }
+                  }
+                },
+                [_vm._v("Cancelar")]
+              )
+            ]
+          )
+        ]
+      )
     ],
     1
   )
