@@ -59,7 +59,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        // dd($request->all());
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->birthdate = $request->birthdate;
+        $user->phone = $request->phone;
+        $user->password = $request->password;
+        $user->gender = $request->gender;
+        return $user->update();
     }
 
     /**

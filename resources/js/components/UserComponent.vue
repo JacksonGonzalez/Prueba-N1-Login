@@ -30,7 +30,7 @@
                                     <td v-if="user.gender == 'M'" >Masculino</td>
                                     <td v-if="user.gender == 'F'" >Femenino</td>
                                     <td>
-                                        <button class="btn btn-warning" @click="editUser(user)" > Editar </button>
+                                        <button class="btn btn-warning" @click="editarUser(user)" > Editar </button>
                                         <button class="btn btn-danger" @click="deleteUser(user)"> Eliminar </button>
                                     </td>
                                 </tr>
@@ -82,8 +82,49 @@
                     <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
                 </div>
             
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
                 <button type="button" v-on:click="hideCategoryModal('AddModal')" class="btn btn-default">Cancelar</button>
+            </form>
+        </b-modal>
+
+        <!-- UPDATE USERS -->
+        <b-modal id="EditModal" title="Editar Usuario" hide-footer>
+            <form @submit.prevent="updateUser">
+                <div class="form-group">
+                    <label for="name">Nombre Completo</label>
+                    <input type="name" v-model="EditUser.name" class="form-control" id="name" required>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo</label>
+                    <input type="email" v-model="EditUser.email" class="form-control" id="email" required>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Fecha de Nacimiento</label>
+                    <input type="date" v-model="EditUser.birthdate" class="form-control" id="date" required>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Numero de Celular</label>
+                    <input type="number" v-model="EditUser.phone" class="form-control" id="phone" required maxlength="10">
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Sexo</label>
+                    <select v-model="EditUser.gender" class="form-control" id="gender" required>
+                        <option value="M" selected>Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="button" v-on:click="hideModal('EditModal')" class="btn btn-default">Cancelar</button>
             </form>
         </b-modal>
 
@@ -104,6 +145,7 @@
                     gender : '',
                 },
                 errors : [],
+                EditUser: [],
             }
         },
         mounted() {
@@ -155,8 +197,37 @@
             hideModal(idModal){
                 this.$bvModal.hide(idModal);
             },
-            editUser(user){
+            editarUser(user){
+                this.EditUser = user;
+                this.$bvModal.show('EditModal');
+                // console.log(this.EditUser);
+            },
+            updateUser(){
+                // console.log('Form edit');
 
+                var url = '/users/' + this.EditUser.id;
+
+                axios.put(url, {
+                    name: this.EditUser.name,
+                    email: this.EditUser.email,
+                    birthdate: this.EditUser.birthdate,
+                    password: this.EditUser.password,
+                    phone: this.EditUser.phone,
+                    gender: this.EditUser.gender,
+                })
+                .then(function (response) {
+                    // console.log(response);
+                    alert('Usuario Editado');
+                    readUser();
+                    hideModal('EditModal');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+                this.readUser();
+                this.hideModal('EditModal');
+                
             },
             deleteUser(user){
                 if(!window.confirm(`Estas seguro de eliminar al usuario ${user.name}`)){

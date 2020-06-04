@@ -2037,6 +2037,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2049,7 +2090,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         phone: '',
         gender: ''
       },
-      errors: []
+      errors: [],
+      EditUser: []
     };
   },
   mounted: function mounted() {
@@ -2091,7 +2133,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }, _defineProperty(_methods, "hideModal", function hideModal(idModal) {
     this.$bvModal.hide(idModal);
-  }), _defineProperty(_methods, "editUser", function editUser(user) {}), _defineProperty(_methods, "deleteUser", function deleteUser(user) {
+  }), _defineProperty(_methods, "editarUser", function editarUser(user) {
+    this.EditUser = user;
+    this.$bvModal.show('EditModal'); // console.log(this.EditUser);
+  }), _defineProperty(_methods, "updateUser", function updateUser() {
+    // console.log('Form edit');
+    var url = '/users/' + this.EditUser.id;
+    axios.put(url, {
+      name: this.EditUser.name,
+      email: this.EditUser.email,
+      birthdate: this.EditUser.birthdate,
+      password: this.EditUser.password,
+      phone: this.EditUser.phone,
+      gender: this.EditUser.gender
+    }).then(function (response) {
+      // console.log(response);
+      alert('Usuario Editado');
+      readUser();
+      hideModal('EditModal');
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    this.readUser();
+    this.hideModal('EditModal');
+  }), _defineProperty(_methods, "deleteUser", function deleteUser(user) {
     if (!window.confirm("Estas seguro de eliminar al usuario ".concat(user.name))) {
       return;
     }
@@ -80485,7 +80550,7 @@ var render = function() {
                             staticClass: "btn btn-warning",
                             on: {
                               click: function($event) {
-                                return _vm.editUser(user)
+                                return _vm.editarUser(user)
                               }
                             }
                           },
@@ -80731,7 +80796,7 @@ var render = function() {
               _c(
                 "button",
                 { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-                [_vm._v("Submit")]
+                [_vm._v("Guardar")]
               ),
               _vm._v(" "),
               _c(
@@ -80742,6 +80807,210 @@ var render = function() {
                   on: {
                     click: function($event) {
                       return _vm.hideCategoryModal("AddModal")
+                    }
+                  }
+                },
+                [_vm._v("Cancelar")]
+              )
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: { id: "EditModal", title: "Editar Usuario", "hide-footer": "" }
+        },
+        [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.updateUser($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "name" } }, [
+                  _vm._v("Nombre Completo")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.EditUser.name,
+                      expression: "EditUser.name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "name", id: "name", required: "" },
+                  domProps: { value: _vm.EditUser.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.EditUser, "name", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "email" } }, [_vm._v("Correo")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.EditUser.email,
+                      expression: "EditUser.email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "email", id: "email", required: "" },
+                  domProps: { value: _vm.EditUser.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.EditUser, "email", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "date" } }, [
+                  _vm._v("Fecha de Nacimiento")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.EditUser.birthdate,
+                      expression: "EditUser.birthdate"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "date", required: "" },
+                  domProps: { value: _vm.EditUser.birthdate },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.EditUser, "birthdate", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "phone" } }, [
+                  _vm._v("Numero de Celular")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.EditUser.phone,
+                      expression: "EditUser.phone"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    id: "phone",
+                    required: "",
+                    maxlength: "10"
+                  },
+                  domProps: { value: _vm.EditUser.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.EditUser, "phone", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "gender" } }, [_vm._v("Sexo")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.EditUser.gender,
+                        expression: "EditUser.gender"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "gender", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.EditUser,
+                          "gender",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "M", selected: "" } }, [
+                      _vm._v("Masculino")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "F" } }, [
+                      _vm._v("Femenino")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                [_vm._v("Actualizar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.hideModal("EditModal")
                     }
                   }
                 },
