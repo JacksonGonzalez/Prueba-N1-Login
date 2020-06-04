@@ -18,6 +18,7 @@
                                     <th scope="col">Fecha de Nacimiento</th>
                                     <th scope="col">Celular</th>
                                     <th scope="col">Genero</th>
+                                    <th scope="col">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,6 +29,10 @@
                                     <td>{{ user.phone }}</td>
                                     <td v-if="user.gender == 'M'" >Masculino</td>
                                     <td v-if="user.gender == 'F'" >Femenino</td>
+                                    <td>
+                                        <button class="btn btn-warning" @click="editCategory(category)" > Editar </button>
+                                        <button class="btn btn-danger" @click="deleteCategory(category)"> Eliminar </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

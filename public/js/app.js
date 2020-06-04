@@ -2030,6 +2030,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -80455,7 +80460,35 @@ var render = function() {
                       _vm._v(" "),
                       user.gender == "F"
                         ? _c("td", [_vm._v("Femenino")])
-                        : _vm._e()
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning",
+                            on: {
+                              click: function($event) {
+                                return _vm.editCategory(_vm.category)
+                              }
+                            }
+                          },
+                          [_vm._v(" Editar ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteCategory(_vm.category)
+                              }
+                            }
+                          },
+                          [_vm._v(" Eliminar ")]
+                        )
+                      ])
                     ])
                   }),
                   0
@@ -80721,7 +80754,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Celular")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Genero")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Genero")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Opciones")])
       ])
     ])
   }
