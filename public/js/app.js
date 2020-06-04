@@ -1941,6 +1941,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var _methods;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -2054,7 +2056,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // console.log('Component mounted.')
     this.readUser();
   },
-  methods: _defineProperty({
+  methods: (_methods = {
     readUser: function readUser() {
       var _this = this;
 
@@ -2087,9 +2089,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }); // this.hideModal('AddModal');
       // this.readUser();
     }
-  }, "hideModal", function hideModal(idModal) {
+  }, _defineProperty(_methods, "hideModal", function hideModal(idModal) {
     this.$bvModal.hide(idModal);
-  })
+  }), _defineProperty(_methods, "editUser", function editUser(user) {}), _defineProperty(_methods, "deleteUser", function deleteUser(user) {
+    if (!window.confirm("Estas seguro de eliminar al usuario ".concat(user.name))) {
+      return;
+    }
+
+    var url = '/users/' + user.id;
+    axios["delete"](url).then(function (response) {
+      // console.log(response);
+      alert('Usuario Eliminado'); // this.readUser();
+      // this.hideModal('AddModal');
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    this.readUser();
+  }), _methods)
 });
 
 /***/ }),
@@ -80469,7 +80485,7 @@ var render = function() {
                             staticClass: "btn btn-warning",
                             on: {
                               click: function($event) {
-                                return _vm.editCategory(_vm.category)
+                                return _vm.editUser(user)
                               }
                             }
                           },
@@ -80482,7 +80498,7 @@ var render = function() {
                             staticClass: "btn btn-danger",
                             on: {
                               click: function($event) {
-                                return _vm.deleteCategory(_vm.category)
+                                return _vm.deleteUser(user)
                               }
                             }
                           },

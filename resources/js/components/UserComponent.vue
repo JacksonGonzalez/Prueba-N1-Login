@@ -30,8 +30,8 @@
                                     <td v-if="user.gender == 'M'" >Masculino</td>
                                     <td v-if="user.gender == 'F'" >Femenino</td>
                                     <td>
-                                        <button class="btn btn-warning" @click="editCategory(category)" > Editar </button>
-                                        <button class="btn btn-danger" @click="deleteCategory(category)"> Eliminar </button>
+                                        <button class="btn btn-warning" @click="editUser(user)" > Editar </button>
+                                        <button class="btn btn-danger" @click="deleteUser(user)"> Eliminar </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -155,6 +155,28 @@
             hideModal(idModal){
                 this.$bvModal.hide(idModal);
             },
+            editUser(user){
+
+            },
+            deleteUser(user){
+                if(!window.confirm(`Estas seguro de eliminar al usuario ${user.name}`)){
+                    return;
+                }
+
+                var url = '/users/' + user.id;
+                axios.delete(url)
+                .then(function (response) {
+                    // console.log(response);
+                    alert('Usuario Eliminado');
+                    // this.readUser();
+                    // this.hideModal('AddModal');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                }); 
+
+                this.readUser();
+            }
         }
     }
 </script>
